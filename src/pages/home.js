@@ -8,15 +8,20 @@ import { FooterContainer } from '../containers/footer';
 export default function Home() {
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer dark={2}>
         <Feature>
-          <Feature.Title>Unlimited films, TV programmes and more.</Feature.Title>
-          <Feature.SubTitle>Watch anywhere. Cancel at any time.</Feature.SubTitle>
+          <Feature.Title>Unlimited films, TV shows and more.</Feature.Title>
+          <Feature.SubTitle>
+            Watch anywhere. Cancel at any time.
+          </Feature.SubTitle>
           <OptForm>
-            <OptForm.Input placeholder="Email address" />
-            <OptForm.Button>Try it now</OptForm.Button>
+            <OptForm.Text>
+              Ready to watch? Enter your email to create or restart your
+              membership.
+            </OptForm.Text>
             <OptForm.Break />
-            <OptForm.Text>Ready to watch? Enter your email to create or restart your membership.</OptForm.Text>
+            <OptForm.Input placeholder='Email address' type='text' required />
+            <OptForm.Button>Get started</OptForm.Button>
           </OptForm>
         </Feature>
       </HeaderContainer>

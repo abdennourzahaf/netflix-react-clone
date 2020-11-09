@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link as ReachRouterLink } from 'react-router-dom';
 import {
   Container,
@@ -21,9 +21,11 @@ import {
 
 export default function Header({ bg = true, children, ...restProps }) {
   return bg ? (
-    <Background data-testid="header-bg" {...restProps}>
-      {children}
-    </Background>
+    <>
+      <Background data-testid='header-bg' {...restProps}>
+        {children}
+      </Background>
+    </>
   ) : (
     children
   );
@@ -45,20 +47,31 @@ Header.Logo = function HeaderLogo({ to, ...restProps }) {
   );
 };
 
-Header.Search = function HeaderSearch({ searchTerm, setSearchTerm, ...restProps }) {
+Header.Search = function HeaderSearch({
+  searchTerm,
+  setSearchTerm,
+  ...restProps
+}) {
   const [searchActive, setSearchActive] = useState(false);
+  const inputRef = useRef();
+  useEffect(() => {
+    if (searchActive) inputRef.current?.focus();
+  }, [searchActive]);
 
   return (
     <Search {...restProps}>
-      <SearchIcon onClick={() => setSearchActive((searchActive) => !searchActive)} data-testid="search-click">
-        <img src="/images/icons/search.png" alt="Search" />
+      <SearchIcon
+        onClick={() => setSearchActive((searchActive) => !searchActive)}
+        data-testid='search-click'>
+        <img src='/images/icons/search.png' alt='Search' />
       </SearchIcon>
       <SearchInput
         value={searchTerm}
         onChange={({ target }) => setSearchTerm(target.value)}
-        placeholder="Search films and series"
+        placeholder='Search films and series'
         active={searchActive}
-        data-testid="search-input"
+        data-testid='search-input'
+        ref={inputRef}
       />
     </Search>
   );
@@ -88,7 +101,10 @@ Header.PlayButton = function HeaderPlayButton({ children, ...restProps }) {
   return <PlayButton {...restProps}>{children}</PlayButton>;
 };
 
-Header.FeatureCallOut = function HeaderFeatureCallOut({ children, ...restProps }) {
+Header.FeatureCallOut = function HeaderFeatureCallOut({
+  children,
+  ...restProps
+}) {
   return <FeatureCallOut {...restProps}>{children}</FeatureCallOut>;
 };
 

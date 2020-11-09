@@ -4,64 +4,78 @@ import { FirebaseContext } from '../context/firebase';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
+import { useForm } from 'react-hook-form';
 import * as ROUTES from '../constants/routes';
 
 export default function SignIn() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
+  const { register, handleSubmit, errors, formState } = useForm({
+    mode: 'onTouched',
+  });
+  const isValid =
+    Object.keys(formState.dirtyFields).length === 2 &&
+    Object.keys(errors).length === 0 &&
+    errors.constructor === Object;
 
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const isInvalid = password === '' || emailAddress === '';
-
-  const handleSignin = (event) => {
-    event.preventDefault();
-
-    return firebase
+  const handleSignin = ({ email, password }) =>
+    firebase
       .auth()
-      .signInWithEmailAndPassword(emailAddress, password)
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
         history.push(ROUTES.BROWSE);
       })
-      .catch((error) => {
-        setEmailAddress('');
-        setPassword('');
-        setError(error.message);
-      });
-  };
+      .catch((error) => setError(error.message));
 
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer dark={1}>
         <Form>
           <Form.Title>Sign In</Form.Title>
-          {error && <Form.Error data-testid="error">{error}</Form.Error>}
+          {error && <Form.Error data-testid='error'>{error}</Form.Error>}
 
-          <Form.Base onSubmit={handleSignin} method="POST">
+          <Form.Base onSubmit={handleSubmit(handleSignin)} method='POST'>
             <Form.Input
-              placeholder="Email address"
-              value={emailAddress}
-              onChange={({ target }) => setEmailAddress(target.value)}
+              ref={register({
+                validate: (value) =>
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                    value
+                  ) || 'Please enter a valid email.',
+              })}
+              placeholder='Email'
+              type='email'
+              name='email'
+              error={errors.email?.message}
+              required
             />
             <Form.Input
-              type="password"
-              value={password}
-              autoComplete="off"
-              placeholder="Password"
-              onChange={({ target }) => setPassword(target.value)}
+              ref={register({
+                required:
+                  'Your password must contain between 8 and 15 characters.',
+              })}
+              type='password'
+              name='password'
+              required
+              error={errors.password?.message}
+              autoComplete='off'
+              placeholder='Password'
             />
-            <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-in">
+            <Form.Submit
+              disabled={!isValid}
+              type='submit'
+              data-testid='sign-in'>
               Sign In
             </Form.Submit>
           </Form.Base>
 
           <Form.Text>
-            New to Netflix? <Form.Link to="/signup">Sign up now.</Form.Link>
+            New to Netflix? <Form.Link to='/signup'>Sign up now.</Form.Link>
           </Form.Text>
           <Form.TextSmall>
-            This page is protected by Google reCAPTCHA to ensure you're not a bot. Learn more.
+            This page is protected by Google reCAPTCHA to ensure you're not a
+            bot. Learn more.
           </Form.TextSmall>
         </Form>
       </HeaderContainer>

@@ -4,9 +4,26 @@ import { Link as ReachRouterLink } from 'react-router-dom';
 export const Background = styled.div`
   display: flex;
   flex-direction: column;
-  background: url(${({ src }) =>
-      src ? `../images/misc/${src}.jpg` : '../images/misc/home-bg.jpg'})
-    top left / cover no-repeat;
+  background: ${({ dark }) =>
+      dark &&
+      (dark === 2
+        ? `linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.9) 100%
+    ),`
+        : `linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.6) 0,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),`)}
+    url(${({ src }) =>
+      src
+        ? `../images/misc/${src}.jpg`
+        : 'https://assets.nflxext.com/ffe/siteui/vlv3/bcd713c9-291e-4186-a275-117b387eaaf2/17ce521f-f232-4529-96e7-6fc022c3d8c6/DZ-en-20201019-popsignuptwoweeks-perspective_alpha_website_small.jpg'})
+    center / cover no-repeat;
 
   @media (max-width: 1100px) {
     ${({ dontShowOnSmallViewPort }) =>
@@ -32,14 +49,15 @@ export const Container = styled.div`
 `;
 
 export const Link = styled.p`
-  color: #fff;
+  color: ${({ active }) => (active === 'true' ? '#ffffff' : '#ffffffcc')};
   text-decoration: none;
   margin-right: 30px;
-  font-weight: ${({ active }) => (active === 'true' ? '700' : 'normal')};
+  font-weight: bold;
   cursor: pointer;
+  transition: color 0.2s;
 
   &:hover {
-    font-weight: bold;
+    color: #ffffff;
   }
 
   &:last-of-type {
@@ -69,11 +87,6 @@ export const Search = styled.div`
   display: flex;
   align-items: center;
 
-  svg {
-    color: white;
-    cursor: pointer;
-  }
-
   @media (max-width: 700px) {
     display: none;
   }
@@ -83,10 +96,15 @@ export const SearchIcon = styled.button`
   cursor: pointer;
   background-color: transparent;
   border: 0;
+  transition: opacity 0.2s;
 
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
   img {
     filter: brightness(0) invert(1);
-    width: 16px;
+    width: 20px;
   }
 `;
 
@@ -113,26 +131,35 @@ export const Picture = styled.button`
   background: url(${({ src }) => src});
   background-size: contain;
   border: 0;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   cursor: pointer;
 `;
 
 export const Dropdown = styled.div`
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   background-color: black;
-  padding: 10px;
-  width: 100px;
-  top: 32px;
-  right: 10px;
+  padding: 12px;
+  /* width: 100px; */
+  top: 42px;
+  right: 0;
+  border-radius: 10px;
+  transition: opacity 0.4s;
+
+  ${Group}:first-of-type ${Link} {
+    color: #ffffff;
+  }
 
   ${Group}:last-of-type ${Link} {
     cursor: pointer;
   }
 
   ${Group} {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 
     &:last-of-type {
       margin-bottom: 0;
@@ -165,8 +192,8 @@ export const Profile = styled.div`
   }
 
   &:hover > ${Dropdown} {
-    display: flex;
-    flex-direction: column;
+    opacity: 1;
+    pointer-events: all;
   }
 `;
 
@@ -220,7 +247,7 @@ export const PlayButton = styled.button`
   font-size: 20px;
   margin-top: 10px;
   cursor: pointer;
-  transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
 
   &:hover {
     background-color: #ff1e1e;

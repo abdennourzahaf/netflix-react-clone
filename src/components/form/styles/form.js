@@ -35,6 +35,7 @@ export const Title = styled.h1`
   color: #fff;
   font-size: 32px;
   font-weight: bold;
+  margin: 0;
   margin-bottom: 28px;
 `;
 
@@ -59,19 +60,71 @@ export const Link = styled(ReachRouterLink)`
     text-decoration: underline;
   }
 `;
-
-export const Input = styled.input`
+export const InputWrapper = styled.div`
+  position: relative;
   background: #333;
   border-radius: 4px;
   border: 0;
-  color: #fff;
-  height: 50px;
   line-height: 50px;
-  padding: 5px 20px;
-  margin-bottom: 20px;
+  height: 50px;
+  /* margin-bottom: 20px; */
 
   &:last-of-type {
     margin-bottom: 30px;
+  }
+  &:after {
+    border-bottom: 2px solid #e87c03;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    bottom: 0;
+    ${({ error }) => error && 'content: "";'}
+    display: block;
+    height: 6px;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+`;
+export const InputError = styled.div`
+  color: #e87c03;
+  margin-bottom: 6px;
+  padding: 6px 3px;
+  font-size: 13px;
+`;
+export const Label = styled.label`
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  color: #8c8c8c;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: 0.1s ease all;
+`;
+
+export const Input = styled.input`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  background: transparent;
+  border-radius: 4px;
+  border: 0;
+  color: #fff;
+  line-height: 50px;
+  padding: 16px 20px 0;
+  &:focus ~ ${Label}, &:valid ~ ${Label} {
+    top: 14px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #9f9f9f;
+  }
+  &:focus,
+  &:valid {
+    outline: none;
+    background: #505050;
   }
 `;
 

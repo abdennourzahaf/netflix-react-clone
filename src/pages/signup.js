@@ -4,25 +4,27 @@ import { FirebaseContext } from '../context/firebase';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
+import { useForm } from 'react-hook-form';
 import * as ROUTES from '../constants/routes';
 
 export default function SignUp() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
+  const { register, handleSubmit, errors, formState } = useForm({
+    mode: 'onTouched',
+  });
 
-  const [firstName, setFirstName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const isInvalid = firstName === '' || password === '' || emailAddress === '';
+  const isValid =
+    Object.keys(formState.dirtyFields).length === 3 &&
+    Object.keys(errors).length === 0 &&
+    errors.constructor === Object;
 
-  const handleSignup = (event) => {
-    event.preventDefault();
-
+  const handleSignup = ({ firstName, email, password }) => {
     return firebase
       .auth()
-      .createUserWithEmailAndPassword(emailAddress, password)
+      .createUserWithEmailAndPassword(email, password)
       .then((result) =>
         result.user
           .updateProfile({
@@ -34,49 +36,79 @@ export default function SignUp() {
           })
       )
       .catch((error) => {
-        setFirstName('');
-        setEmailAddress('');
-        setPassword('');
         setError(error.message);
       });
   };
 
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer dark={1}>
         <Form>
           <Form.Title>Sign Up</Form.Title>
           {error && <Form.Error>{error}</Form.Error>}
 
-          <Form.Base onSubmit={handleSignup} method="POST">
+          <Form.Base onSubmit={handleSubmit(handleSignup)}>
             <Form.Input
-              placeholder="First name"
-              value={firstName}
-              onChange={({ target }) => setFirstName(target.value)}
+              ref={register({
+                required: 'First name is required.',
+                maxLength: 128,
+              })}
+              placeholder='First name'
+              type='text'
+              name='firstName'
+              error={errors.firstName?.message}
+              required
             />
             <Form.Input
-              placeholder="Email address"
-              value={emailAddress}
-              onChange={({ target }) => setEmailAddress(target.value)}
+              ref={register({
+                validate: (value) =>
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                    value
+                  ) || 'Please enter a valid email.',
+              })}
+              placeholder='Email or phone number'
+              type='email'
+              name='email'
+              error={errors.email?.message}
+              required
             />
             <Form.Input
-              type="password"
-              value={password}
-              autoComplete="off"
-              placeholder="Password"
-              onChange={({ target }) => setPassword(target.value)}
+              ref={register({
+                validate: (value) =>
+                  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,256}$/.test(
+                    value
+                  ) ||
+                  'Password should contain at least 8 characters, one lowercase letter, one uppercase letter, one numeric digit, and one special character.',
+              })}
+              type='password'
+              name='password'
+              required
+              error={errors.password?.message}
+              autoComplete='off'
+              placeholder='Password'
             />
-            <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
+            <Form.Submit
+              disabled={!isValid}
+              type='submit'
+              data-testid='sign-up'>
               Sign Up
             </Form.Submit>
           </Form.Base>
 
           <Form.Text>
-            Already a user? <Form.Link to="/signin">Sign in now.</Form.Link>
+            Already a user? <Form.Link to='/signin'>Sign in now.</Form.Link>
           </Form.Text>
           <Form.TextSmall>
-            This page is protected by Google reCAPTCHA to ensure you're not a bot. Learn more.
+            This page is protected by Google reCAPTCHA to ensure you're not a
+            bot. <button>Learn more.</button>
           </Form.TextSmall>
+          <Form.Recaptcha>
+            The information collected by Google reCAPTCHA is subject to the
+            Google Privacy Policy and Terms of Service, and is used for
+            providing, maintaining, and improving the reCAPTCHA service and for
+            general security purposes (it is not used for personalized
+            advertising by Google).
+          </Form.Recaptcha>
         </Form>
       </HeaderContainer>
       <FooterContainer />

@@ -31,20 +31,30 @@ export const Row = styled.div`
 export const Link = styled.a`
   color: #757575;
   margin-bottom: 20px;
-  font-size: 13px;
+  font-size: 15px;
   text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #eeeeee;
+  }
 `;
 
 export const Title = styled.p`
   font-size: 16px;
   color: #757575;
   margin-bottom: 40px;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export const Text = styled.p`
-  font-size: 13px;
+  font-size: 14px;
   color: #757575;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  margin-top: 40px;
 `;
 
 export const Break = styled.div`
