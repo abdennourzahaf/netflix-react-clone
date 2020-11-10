@@ -1,11 +1,20 @@
 import styled from 'styled-components/macro';
 
 export const Container = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const Inner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
   max-width: 80%;
 `;
 
@@ -15,6 +24,7 @@ export const Title = styled.h1`
   font-size: 48px;
   text-align: center;
   font-weight: 500;
+  margin-top: 0;
 `;
 
 export const List = styled.ul`
@@ -25,25 +35,36 @@ export const List = styled.ul`
 `;
 
 export const Name = styled.p`
-  color: #808080;
+  line-height: 1.2em;
+  min-height: 1.8em;
+  color: grey;
+  display: block;
+  text-align: center;
+  font-size: 1.3vw;
+  font-weight: 600;
+  margin: 0.6em 0;
   text-overflow: ellipsis;
-  font-size: 16px;
-
-  &:hover {
-    font-weight: bold;
-    color: #e5e5e5;
-  }
+  overflow: hidden;
 `;
 
-export const Picture = styled.img`
-  width: 100%;
-  max-width: 150px;
-  height: auto;
-  border: 3px solid black;
-  cursor: pointer;
+export const Picture = styled.div`
+  height: 10vw;
+  width: 10vw;
+  max-height: 200px;
+  max-width: 200px;
+  min-height: 84px;
+  min-width: 84px;
+  box-sizing: border-box;
+  position: relative;
+  text-decoration: none;
+  background-image: url(${({ bg }) => `${bg}`});
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
 `;
 
 export const Item = styled.li`
+  cursor: pointer;
   max-height: 200px;
   max-width: 200px;
   list-style-type: none;
@@ -51,11 +72,10 @@ export const Item = styled.li`
   margin-right: 30px;
 
   &:hover > ${Picture} {
-    border: 3px solid white;
+    box-shadow: 0 0 0 3px white;
   }
 
   &:hover ${Name} {
-    font-weight: bold;
     color: white;
   }
 

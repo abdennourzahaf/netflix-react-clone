@@ -1,8 +1,20 @@
 import React from 'react';
-import { Container, Title, List, Item, Picture, Name } from './styles/profiles';
+import {
+  Container,
+  Title,
+  List,
+  Item,
+  Picture,
+  Inner,
+  Name,
+} from './styles/profiles';
 
 export default function Profiles({ children, ...restProps }) {
-  return <Container {...restProps}>{children}</Container>;
+  return (
+    <Container {...restProps}>
+      <Inner>{children}</Inner>
+    </Container>
+  );
 }
 
 Profiles.Title = function ProfilesTitle({ children, ...restProps }) {
@@ -17,8 +29,14 @@ Profiles.User = function ProfilesUser({ children, ...restProps }) {
   return <Item {...restProps}>{children}</Item>;
 };
 
-Profiles.Picture = function ProfilesPicture({ src, ...restProps }) {
-  return <Picture {...restProps} src={src ? `/images/users/${src}.png` : '/images/misc/loading.gif'} />;
+Profiles.Picture = function ProfilesPicture({ bg, ...restProps }) {
+  console.log('ProfilesPicture -> bg', bg);
+  return (
+    <Picture
+      {...restProps}
+      bg={bg ? `/images/users/${bg}.png` : '/images/misc/loading.gif'}
+    />
+  );
 };
 
 Profiles.Name = function ProfilesName({ children, ...restProps }) {

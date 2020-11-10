@@ -4,8 +4,9 @@ import {
   Input,
   Label,
   Break,
-  Button,
+  Submit,
   InputWrapper,
+  Error,
   Text,
 } from './styles/opt-form';
 
@@ -13,27 +14,33 @@ export default function OptForm({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>;
 }
 
-OptForm.Input = function OptFormInput({ placeholder, ...restProps }) {
+OptForm.Input = React.forwardRef(function OptFormInput(
+  { placeholder, error, ...restProps },
+  ref
+) {
   return (
-    <InputWrapper>
-      <Input {...restProps} />
-      <Label>{placeholder}</Label>
-    </InputWrapper>
+    <>
+      <InputWrapper error={error}>
+        <Input ref={ref} {...restProps} />
+        <Label>{placeholder}</Label>
+        <Error>{error}</Error>
+      </InputWrapper>
+    </>
   );
-};
+});
 
-OptForm.Button = function OptFormButton({ children, ...restProps }) {
+OptForm.Submit = function OptFormSubmit({ children, ...restProps }) {
   return (
-    <Button {...restProps}>
-      {children}{' '}
+    <Submit type='submit' {...restProps}>
+      {children}
       <svg viewBox='0 0 6 12' xmlns='http://www.w3.org/2000/svg'>
         <desc>chevron</desc>
         <path
           d='M.61 1.312l.78-.624L5.64 6l-4.25 5.312-.78-.624L4.36 6z'
           fill='none'
-          fill-rule='evenodd'></path>
+          fillRule='evenodd'></path>
       </svg>
-    </Button>
+    </Submit>
   );
 };
 

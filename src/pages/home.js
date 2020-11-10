@@ -1,9 +1,10 @@
 import React from 'react';
-import { Feature, OptForm } from '../components';
+import { Feature } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { JumbotronContainer } from '../containers/jumbotron';
 import { FaqsContainer } from '../containers/faqs';
 import { FooterContainer } from '../containers/footer';
+import { OptFormContainer } from '../containers/opt-form';
 
 export default function Home() {
   return (
@@ -14,15 +15,7 @@ export default function Home() {
           <Feature.SubTitle>
             Watch anywhere. Cancel at any time.
           </Feature.SubTitle>
-          <OptForm>
-            <OptForm.Text>
-              Ready to watch? Enter your email to create or restart your
-              membership.
-            </OptForm.Text>
-            <OptForm.Break />
-            <OptForm.Input placeholder='Email address' type='text' required />
-            <OptForm.Button>Get started</OptForm.Button>
-          </OptForm>
+          <OptFormContainer />
         </Feature>
       </HeaderContainer>
 

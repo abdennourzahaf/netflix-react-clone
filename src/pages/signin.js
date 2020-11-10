@@ -36,7 +36,7 @@ export default function SignIn() {
           <Form.Title>Sign In</Form.Title>
           {error && <Form.Error data-testid='error'>{error}</Form.Error>}
 
-          <Form.Base onSubmit={handleSubmit(handleSignin)} method='POST'>
+          <Form.Base onSubmit={handleSubmit(handleSignin)}>
             <Form.Input
               ref={register({
                 validate: (value) =>

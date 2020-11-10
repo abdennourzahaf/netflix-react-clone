@@ -1,10 +1,9 @@
 import styled from 'styled-components/macro';
 
-export const Container = styled.div`
+export const Container = styled.form`
   display: flex;
   justify-content: center;
   height: 100%;
-  /* margin-top: 20px; */
   flex-wrap: wrap;
 
   @media (max-width: 1000px) {
@@ -20,6 +19,17 @@ export const InputWrapper = styled.div`
   height: 60px;
   box-sizing: border-box;
   margin-right: 1px;
+  &:after {
+    border-bottom: 3px solid #e87c03;
+    bottom: 0;
+    ${({ error }) => error && 'content: "";'}
+    display: block;
+    height: 6px;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
   @media (min-width: 1000px) {
     height: 70px;
   }
@@ -43,12 +53,19 @@ export const Input = styled.input`
   box-sizing: border-box;
   &:focus ~ ${Label}, &:valid ~ ${Label} {
     top: 14px;
-    /* bottom: 10px; */
-    /* left: 20px; */
     font-size: 13px;
     font-weight: 600;
-    /* opacity: 1; */
   }
+`;
+
+export const Error = styled.div`
+  position: absolute;
+  bottom: -36px;
+  color: #e87c03;
+  margin-bottom: 6px;
+  padding: 6px 3px;
+  font-size: 15px;
+  font-weight: 600;
 `;
 
 export const Break = styled.div`
@@ -56,7 +73,7 @@ export const Break = styled.div`
   height: 0;
 `;
 
-export const Button = styled.button`
+export const Submit = styled.button`
   display: flex;
   align-items: center;
   height: 60px;

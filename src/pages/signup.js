@@ -1,17 +1,23 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { FirebaseContext } from '../context/firebase';
-import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
-import { useForm } from 'react-hook-form';
+import { Form } from '../components';
 import * as ROUTES from '../constants/routes';
 
 export default function SignUp() {
   const history = useHistory();
+  const location = useLocation();
   const { firebase } = useContext(FirebaseContext);
   const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onTouched',
+    defaultValues: {
+      firstName: '',
+      email: location.data?.email || '',
+      password: '',
+    },
   });
 
   const [error, setError] = useState('');
@@ -66,7 +72,7 @@ export default function SignUp() {
                     value
                   ) || 'Please enter a valid email.',
               })}
-              placeholder='Email or phone number'
+              placeholder='Email'
               type='email'
               name='email'
               error={errors.email?.message}
@@ -100,7 +106,7 @@ export default function SignUp() {
           </Form.Text>
           <Form.TextSmall>
             This page is protected by Google reCAPTCHA to ensure you're not a
-            bot. <button>Learn more.</button>
+            bot. <Form.ShowRecapthaButton>Learn more.</Form.ShowRecapthaButton>
           </Form.TextSmall>
           <Form.Recaptcha>
             The information collected by Google reCAPTCHA is subject to the

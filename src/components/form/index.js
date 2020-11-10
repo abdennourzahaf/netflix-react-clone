@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import {
   Container,
   Error,
@@ -10,12 +10,20 @@ import {
   Label,
   Link,
   Input,
+  Recaptcha,
   InputError,
+  RecapthaButton,
   Submit,
 } from './styles/form';
+const showRecaptchaContext = createContext({});
 
 export default function Form({ children, ...restProps }) {
-  return <Container {...restProps}>{children}</Container>;
+  const [showRecaptcha, setShowRecaptcha] = useState(false);
+  return (
+    <showRecaptchaContext.Provider value={{ showRecaptcha, setShowRecaptcha }}>
+      <Container {...restProps}>{children}</Container>
+    </showRecaptchaContext.Provider>
+  );
 }
 
 Form.Error = function FormError({ children, ...restProps }) {
@@ -36,6 +44,31 @@ Form.Text = function FormText({ children, ...restProps }) {
 
 Form.TextSmall = function FormTextSmall({ children, ...restProps }) {
   return <TextSmall {...restProps}>{children}</TextSmall>;
+};
+
+Form.ShowRecapthaButton = function ShowRecapthaButton({
+  children,
+  ...restProps
+}) {
+  const { showRecaptcha, setShowRecaptcha } = useContext(showRecaptchaContext);
+  return (
+    <RecapthaButton
+      showRecaptcha={showRecaptcha}
+      onClick={() => setShowRecaptcha(true)}
+      {...restProps}>
+      {children}
+    </RecapthaButton>
+  );
+};
+
+Form.Recaptcha = function FormRecaptcha({ children, ...restProps }) {
+  const { showRecaptcha } = useContext(showRecaptchaContext);
+
+  return (
+    <Recaptcha showRecaptcha={showRecaptcha} {...restProps}>
+      {children}
+    </Recaptcha>
+  );
 };
 
 Form.Link = function FormLink({ children, ...restProps }) {

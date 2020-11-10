@@ -51,6 +51,27 @@ export const TextSmall = styled.p`
   line-height: normal;
   color: #8c8c8c;
 `;
+export const RecapthaButton = styled.button`
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #0071eb;
+  cursor: pointer;
+  display: ${({ showRecaptcha }) => (showRecaptcha ? 'none' : 'inline')};
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const Recaptcha = styled(TextSmall)`
+  margin-top: 0;
+  visibility: ${({ showRecaptcha }) => (showRecaptcha ? 'visible' : 'hidden')};
+  opacity: ${({ showRecaptcha }) => (showRecaptcha ? 1 : 0)};
+  transition: opacity 0.5s ease;
+`;
 
 export const Link = styled(ReachRouterLink)`
   color: #fff;
