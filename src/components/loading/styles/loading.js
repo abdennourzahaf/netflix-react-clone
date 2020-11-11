@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components/macro';
 
 export const LockBody = createGlobalStyle`
   body {
@@ -27,8 +27,6 @@ export const Spinner = styled.div`
     background-image: url(/images/misc/spinner.png);
     background-size: contain;
     background-repeat: no-repeat;
-    margin-top: -150px;
-    margin-left: -75px;
     width: 150px;
     height: 150px;
     animation-name: spin;
@@ -39,37 +37,37 @@ export const Spinner = styled.div`
 
   @-ms-keyframes spin {
     from {
-      -ms-transform: rotate(0deg);
+      -ms-transform: translate(-50%, -50%), rotate(0deg);
     }
     to {
-      -ms-transform: rotate(360deg);
+      -ms-transform: translate(-50%, -50%), rotate(360deg);
     }
   }
 
   @-moz-keyframes spin {
     from {
-      -moz-transform: rotate(0deg);
+      -moz-transform: translate(-50%, -50%), rotate(0deg);
     }
     to {
-      -moz-transform: rotate(360deg);
+      -moz-transform: translate(-50%, -50%), rotate(360deg);
     }
   }
 
   @-webkit-keyframes spin {
     from {
-      -webkit-transform: rotate(0deg);
+      -webkit-transform: translate(-50%, -50%), rotate(0deg);
     }
     to {
-      -webkit-transform: rotate(360deg);
+      -webkit-transform: translate(-50%, -50%), rotate(360deg);
     }
   }
 
   @keyframes spin {
     from {
-      transform: rotate(0deg);
+      transform: translate(-50%, -50%) rotate(0deg);
     }
     to {
-      transform: rotate(360deg);
+      transform: translate(-50%, -50%) rotate(360deg);
     }
   }
 `;
@@ -80,6 +78,6 @@ export const Picture = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -100px;
-  margin-left: -22px;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
 `;

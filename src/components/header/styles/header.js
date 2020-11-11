@@ -19,6 +19,9 @@ export const Background = styled.div`
       rgba(0, 0, 0, 0.2) 50%,
       rgba(0, 0, 0, 0.6) 100%
     ),`)}
+    ${({ home }) =>
+      home &&
+      `linear-gradient(to top, #111 10%, transparent), linear-gradient(to right, #111 30%, transparent 70%),`}
     url(${({ src }) =>
       src
         ? `../images/misc/${src}.jpg`
@@ -134,6 +137,7 @@ export const Picture = styled.button`
   width: 42px;
   height: 42px;
   cursor: pointer;
+  border-radius: 4px;
 `;
 
 export const Dropdown = styled.div`
@@ -144,11 +148,10 @@ export const Dropdown = styled.div`
   position: absolute;
   background-color: black;
   padding: 12px;
-  /* width: 100px; */
   top: 42px;
   right: 0;
   border-radius: 10px;
-  transition: opacity 0.4s;
+  transition: opacity 0.4s 0.1s;
 
   ${Group}:first-of-type ${Link} {
     color: #ffffff;
@@ -210,47 +213,50 @@ export const Feature = styled(Container)`
 
 export const FeatureCallOut = styled.h2`
   color: white;
-  font-size: 50px;
-  line-height: normal;
+  font-size: 60px;
   font-weight: bold;
+  line-height: normal;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
   margin: 0;
 `;
 
 export const Text = styled.p`
-  color: white;
-  font-size: 22px;
+  font-size: 20px;
+  color: #999;
+  max-width: 80%;
   line-height: normal;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
 `;
 
 export const Logo = styled.img`
   height: 32px;
-  width: 108px;
   margin-right: 40px;
 
   @media (min-width: 1449px) {
-    height: 45px;
-    width: 167px;
+    height: 32px;
   }
 `;
 
-export const PlayButton = styled.button`
-  box-shadow: 0 0.6vw 1vw -0.4vw rgba(0, 0, 0, 0.35);
-  background-color: #e6e6e6;
-  color: #000;
-  border-width: 0;
-  padding: 10px 20px;
-  border-radius: 5px;
-  max-width: 130px;
-  font-weight: bold;
-  font-size: 20px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: background-color 0.5s ease, color 0.5s ease;
+export const ButtonsContainer = styled.div``;
 
+export const Button = styled.button`
+  display: inline-block;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  opacity: 1;
+  transition: all ease 0.2s;
+  background-color: ${({ inversed }) => (inversed ? '#333' : '#fff')};
+  color: ${({ inversed }) => (inversed ? '#fff' : '#000')};
   &:hover {
-    background-color: #ff1e1e;
-    color: white;
+    opacity: 0.7;
+  }
+  @media (max-width: 760px) {
+    font-size: 10px;
   }
 `;

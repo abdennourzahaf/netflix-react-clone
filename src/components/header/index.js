@@ -13,7 +13,8 @@ import {
   SearchIcon,
   SearchInput,
   ButtonLink,
-  PlayButton,
+  ButtonsContainer,
+  Button,
   Text,
   Feature,
   Logo,
@@ -97,8 +98,15 @@ Header.TextLink = function HeaderTextLink({ children, ...restProps }) {
   return <Link {...restProps}>{children}</Link>;
 };
 
-Header.PlayButton = function HeaderPlayButton({ children, ...restProps }) {
-  return <PlayButton {...restProps}>{children}</PlayButton>;
+Header.ButtonsContainer = function HeaderButtonsContainer({
+  children,
+  ...restProps
+}) {
+  return <ButtonsContainer {...restProps}>{children}</ButtonsContainer>;
+};
+
+Header.Button = function HeaderButton({ children, ...restProps }) {
+  return <Button {...restProps}>{children}</Button>;
 };
 
 Header.FeatureCallOut = function HeaderFeatureCallOut({
