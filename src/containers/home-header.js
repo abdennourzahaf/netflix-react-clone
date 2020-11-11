@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { HomeHeader } from '../components';
 import * as ROUTES from '../constants/routes';
+import { FirebaseContext } from '../context/firebase';
 import logo from '../logo.svg';
 
-export default function HomeHeaderContainer({ ...restProps }) {
+export default function HomeHeaderContainer({
+  photoURL,
+  firstName,
+  ...restProps
+}) {
+  const { firebase } = useContext(FirebaseContext);
   return (
     <HomeHeader {...restProps}>
       <HomeHeader.Right>
-        <HomeHeader.Logo
-          src='https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Netflix.png'
-          alt=''
-        />
+        <HomeHeader.Logo to={ROUTES.HOME} src={logo} alt='Netflix' />
       </HomeHeader.Right>
       <HomeHeader.Left>
-        <HomeHeader.User
-          src='https://pbs.twimg.com/profile_images/1240119990411550720/hBEe3tdn_400x400.png'
-          alt=''
-        />
+        <HomeHeader.Profile>
+          <HomeHeader.Picture src={photoURL} />
+          <HomeHeader.Dropdown>
+            <HomeHeader.Group>
+              <HomeHeader.Picture src={photoURL} />
+              <HomeHeader.TextLink>{firstName}</HomeHeader.TextLink>
+            </HomeHeader.Group>
+            <HomeHeader.Group>
+              <HomeHeader.TextLink onClick={() => firebase.auth().signOut()}>
+                Sign out
+              </HomeHeader.TextLink>
+            </HomeHeader.Group>
+          </HomeHeader.Dropdown>
+        </HomeHeader.Profile>
       </HomeHeader.Left>
     </HomeHeader>
   );

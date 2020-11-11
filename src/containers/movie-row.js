@@ -25,23 +25,27 @@ export default function MovieRowContainer({ title, items }) {
   return (
     <MovieRow>
       <h2>{title}</h2>
-      <MovieRow.Left onClick={handleLeftArrow}>
-        <NavigateBeforeIcon style={{ fontSize: 50 }} />
-      </MovieRow.Left>
-      <MovieRow.Right onClick={handleRightArrow}>
-        <NavigateNextIcon style={{ fontSize: 50 }} />
-      </MovieRow.Right>
 
       <MovieRow.ListArea>
+        <MovieRow.Left X={scrollX} onClick={handleLeftArrow}>
+          <NavigateBeforeIcon style={{ fontSize: 50 }} />
+        </MovieRow.Left>
+        <MovieRow.Right
+          X={scrollX}
+          Y={window.innerWidth - items.results.length * 150 - 60}
+          onClick={handleRightArrow}>
+          <NavigateNextIcon style={{ fontSize: 50 }} />
+        </MovieRow.Right>
         <MovieRow.List X={scrollX} W={items.results.length}>
           {items.results.length > 0 &&
             items.results.map((item, key) => (
-              <MovieRow.Item key={key}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
-                  alt=''
-                />
-              </MovieRow.Item>
+              <MovieRow.Item
+                key={key}
+                path={item.poster_path}
+                title={item.title || item.name}
+                vote={item.vote_average}
+                desc={item.overview}
+              />
             ))}
         </MovieRow.List>
       </MovieRow.ListArea>

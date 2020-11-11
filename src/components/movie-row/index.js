@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import { Left, Right, List, ListArea, Item, Row } from './styles/movie-row';
+import React from 'react';
+import RowItem from '../row-item';
+import { Group, Left, Right, List, ListArea, Row } from './styles/movie-row';
 
 export default function MovieRow({ title, items, children, ...restProps }) {
   return <Row {...restProps}>{children}</Row>;
 }
+
+MovieRow.Group = function MovieRowGroup({ children, ...restProps }) {
+  return <Group {...restProps}>{children}</Group>;
+};
 
 MovieRow.Left = function MovieRowLeft({ children, ...restProps }) {
   return <Left {...restProps}>{children}</Left>;
@@ -22,5 +27,5 @@ MovieRow.List = function MovieRowList({ children, ...restProps }) {
 };
 
 MovieRow.Item = function MovieRowItem({ children, ...restProps }) {
-  return <Item {...restProps}>{children}</Item>;
+  return <RowItem {...restProps}>{children}</RowItem>;
 };

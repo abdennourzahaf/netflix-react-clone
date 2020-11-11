@@ -33,7 +33,29 @@ export default function Header({ bg = true, children, ...restProps }) {
 }
 
 Header.Frame = function HeaderFrame({ children, ...restProps }) {
-  return <Container {...restProps}>{children}</Container>;
+  const [black, setBlack] = useState(false);
+
+  useEffect(() => {
+    const scrollListener = () => {
+      if (window.scrollY > 10) {
+        setBlack(true);
+      } else {
+        setBlack(false);
+      }
+    };
+
+    window.addEventListener('scroll', scrollListener);
+
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+    };
+  }, []);
+
+  return (
+    <Container black={black} {...restProps}>
+      {children}
+    </Container>
+  );
 };
 
 Header.Group = function HeaderGroup({ children, ...restProps }) {

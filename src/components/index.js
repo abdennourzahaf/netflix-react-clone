@@ -12,3 +12,4 @@ export { default as Player } from './player';
 export { default as HomeHeader } from './home-header';
 export { default as FeaturedMovie } from './featured-movie';
 export { default as MovieRow } from './movie-row';
+export { default as RowItem } from './row-item';

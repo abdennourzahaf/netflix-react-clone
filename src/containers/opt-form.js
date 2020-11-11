@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { OptForm } from '../components';
+import * as ROUTES from '../constants/routes';
 
 export const OptFormContainer = () => {
   const { register, errors, handleSubmit } = useForm({
@@ -10,8 +11,8 @@ export const OptFormContainer = () => {
   const history = useHistory();
   const handleEmail = ({ email }) =>
     history.push({
-      pathname: '/signup',
-      data: { email }, // your data array of objects
+      pathname: ROUTES.SIGN_UP,
+      data: { email },
     });
   return (
     <OptForm onSubmit={handleSubmit(handleEmail)}>

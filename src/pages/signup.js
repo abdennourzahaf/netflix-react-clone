@@ -21,9 +21,11 @@ export default function SignUp() {
   });
 
   const [error, setError] = useState('');
+  const [currentEmail, setCurrentEmail] = useState('');
 
   const isValid =
-    Object.keys(formState.dirtyFields).length === 3 &&
+    Object.keys(formState.dirtyFields).length ===
+      (location.data?.email ? 2 : 3) &&
     Object.keys(errors).length === 0 &&
     errors.constructor === Object;
 
@@ -42,6 +44,7 @@ export default function SignUp() {
           })
       )
       .catch((error) => {
+        setCurrentEmail(email);
         setError(error.message);
       });
   };
@@ -51,7 +54,23 @@ export default function SignUp() {
       <HeaderContainer dark={1}>
         <Form>
           <Form.Title>Sign Up</Form.Title>
-          {error && <Form.Error>{error}</Form.Error>}
+          {error && (
+            <Form.Error>
+              {error}{' '}
+              {error ===
+                'The email address is already in use by another account.' && (
+                <Form.Link
+                  to={{
+                    pathname: ROUTES.SIGN_IN,
+                    // search: "?sort=name",
+                    // hash: "#the-hash",
+                    state: { currentEmail },
+                  }}>
+                  Sign in
+                </Form.Link>
+              )}
+            </Form.Error>
+          )}
 
           <Form.Base onSubmit={handleSubmit(handleSignup)}>
             <Form.Input
@@ -102,7 +121,8 @@ export default function SignUp() {
           </Form.Base>
 
           <Form.Text>
-            Already a user? <Form.Link to='/signin'>Sign in now.</Form.Link>
+            Already a user?{' '}
+            <Form.Link to={ROUTES.SIGN_IN}>Sign in now.</Form.Link>
           </Form.Text>
           <Form.TextSmall>
             This page is protected by Google reCAPTCHA to ensure you're not a

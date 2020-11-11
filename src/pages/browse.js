@@ -1,5 +1,4 @@
 import React from 'react';
-// import { BrowseContainer } from '../containers/browse';
 import NewBrowseContainer from '../containers/new-browse';
 import { useContent } from '../hooks';
 import { selectionFilter } from '../utils';

@@ -1,25 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Loading, MovieRow } from '../components';
+import { FirebaseContext } from '../context/firebase';
 import Tmdb from '../Tmdb';
 import FeaturedMovieContainer from './featured-movie';
 import HomeHeaderContainer from './home-header';
 import MovieRowContainer from './movie-row';
+import { SelectProfileContainer } from './profiles';
+import { FooterContainer } from './footer';
 
 export default function NewBrowseContainer() {
   const [movieList, setMovieList] = useState([]);
   const [featuredData, setFeaturedData] = useState(null);
   const [blackHeader, setblackHeader] = useState(false);
+  const [profile, setProfile] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const { firebase } = useContext(FirebaseContext);
+  const user = firebase.auth().currentUser || {};
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, [profile.displayName]);
 
   useEffect(() => {
     const loadAll = async () => {
-      let list = await Tmdb.getHomeList();
+      const list = await Tmdb.getHomeList();
       setMovieList(list);
 
-      let originals = list.filter((i) => i.slug === 'originals');
-      let randonChosen = Math.floor(
+      const originals = list.filter((i) => i.slug === 'originals');
+      const randomChosen = Math.floor(
         Math.random() * (originals[0].items.results.length - 1)
       );
-      let chosen = originals[0].items.results[randonChosen];
-      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv');
+      const chosen = originals[0].items.results[randomChosen];
+      const chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv');
       setFeaturedData(chosenInfo);
     };
 
@@ -42,27 +57,28 @@ export default function NewBrowseContainer() {
     };
   }, []);
 
-  return (
-    <div className='page'>
-      <HomeHeaderContainer black={blackHeader} />
+  return profile.displayName ? (
+    <>
+      {loading ? <Loading src={user.photoURL} /> : <Loading.ReleaseBody />}
+      <HomeHeaderContainer
+        firstName={user.displayName}
+        photoURL={user.photoURL}
+        black={blackHeader}
+      />
 
       {featuredData && <FeaturedMovieContainer item={featuredData} />}
 
-      <section className='lists'>
+      <MovieRow.Group>
         {movieList.map((item, key) => (
           <MovieRowContainer
             key={key}
             title={item.title}
             items={item.items}></MovieRowContainer>
         ))}
-      </section>
-      {movieList.length <= 0 && (
-        <div className='loading'>
-          <img
-            src='https://cdn.lowgif.com/small/0534e2a412eeb281-the-counterintuitive-tech-behind-netflix-s-worldwide.gif'
-            alt='loading'></img>
-        </div>
-      )}
-    </div>
+      </MovieRow.Group>
+      <FooterContainer />
+    </>
+  ) : (
+    <SelectProfileContainer user={user} setProfile={setProfile} />
   );
 }

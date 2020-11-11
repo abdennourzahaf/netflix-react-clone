@@ -11,7 +11,7 @@ export default function FeaturedMovieContainer({ item }) {
   }
 
   let descr = item.overview;
-  if (descr.length > 200) {
+  if (descr.length > 250) {
     descr = descr.substring(0, 200) + '...';
   }
   return (
@@ -29,7 +29,6 @@ export default function FeaturedMovieContainer({ item }) {
                 focusable='false'
                 data-prefix='fas'
                 data-icon='star'
-                class='svg-inline--fa fa-star fa-w-18'
                 role='img'
                 viewBox='0 0 576 512'>
                 <path

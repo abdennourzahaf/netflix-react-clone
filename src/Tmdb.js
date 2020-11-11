@@ -17,51 +17,51 @@ const obj = {
       },
       {
         slug: 'trending',
-        title: 'Recomendados para Você',
+        title: 'Trending',
         items: await basicFecth(
           `/trending/all/week?language=en&api_key=${API_KEY}`
         ),
       },
       {
         slug: 'toprated',
-        title: 'Em Alta',
+        title: 'Top Rated',
         items: await basicFecth(
           `/movie/top_rated?&language=en&api_key=${API_KEY}`
         ),
       },
       {
         slug: 'action',
-        title: 'Ação',
+        title: 'Action',
         items: await basicFecth(
           `/discover/movie?with_genres=28&language=en&api_key=${API_KEY}`
         ),
       },
       {
         slug: 'comedy',
-        title: 'Comédia',
+        title: 'Comedy',
         items: await basicFecth(
           `/discover/movie?with_genres=35&language=en&api_key=${API_KEY}`
         ),
       },
       {
         slug: 'horror',
-        title: 'Terror',
+        title: 'Horror',
         items: await basicFecth(
           `/discover/movie?with_genres=27&language=en&api_key=${API_KEY}`
         ),
       },
       {
-        slug: 'romance',
-        title: 'Romance',
+        slug: 'family',
+        title: 'Family',
         items: await basicFecth(
-          `/discover/movie?with_genres=10749&language=en&api_key=${API_KEY}`
+          `/discover/movie?with_genres=10751&language=en&api_key=${API_KEY}`
         ),
       },
       {
-        slug: 'documentary',
-        title: 'Documentários',
+        slug: 'drama',
+        title: 'Drama',
         items: await basicFecth(
-          `/discover/movie?with_genres=99&language=en&api_key=${API_KEY}`
+          `/discover/movie?with_genres=18&language=en&api_key=${API_KEY}`
         ),
       },
     ];

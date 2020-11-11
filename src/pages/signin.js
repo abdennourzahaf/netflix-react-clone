@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
@@ -9,12 +9,19 @@ import * as ROUTES from '../constants/routes';
 
 export default function SignIn() {
   const history = useHistory();
+  const location = useLocation();
   const { firebase } = useContext(FirebaseContext);
   const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onTouched',
+    defaultValues: {
+      firstName: '',
+      email: location.state.currentEmail || '',
+      password: '',
+    },
   });
   const isValid =
-    Object.keys(formState.dirtyFields).length === 2 &&
+    Object.keys(formState.dirtyFields).length ===
+      (location.state.currentEmail ? 1 : 2) &&
     Object.keys(errors).length === 0 &&
     errors.constructor === Object;
 

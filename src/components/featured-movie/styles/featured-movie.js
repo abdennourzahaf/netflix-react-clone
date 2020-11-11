@@ -98,6 +98,7 @@ export const Description = styled.div`
 
 export const ButtonsContainer = styled.div`
   margin-top: 15px;
+  /* margin-bottom: 50px; */
 `;
 
 export const Button = styled.button`
@@ -118,7 +119,7 @@ export const Button = styled.button`
     opacity: 0.7;
   }
   @media (max-width: 760px) {
-    font-size: 10px;
+    font-size: 16px;
   }
 `;
 
@@ -129,5 +130,6 @@ export const Genres = styled.div`
   color: #bbb;
   @media (max-width: 760px) {
     font-size: 14px;
+    margin-bottom: 12px;
   }
 `;

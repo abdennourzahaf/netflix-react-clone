@@ -4,9 +4,10 @@ import { css } from 'styled-components';
 const sharedStyle = css`
   position: absolute;
   width: 40px;
-  height: 225px;
-  background-color: rgba(0, 0, 0, 0.6);
+  height: 220px;
+  background-color: transparent;
   z-index: 99;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,27 +15,39 @@ const sharedStyle = css`
   cursor: pointer;
   opacity: 0;
   transition: all ease 0.2s;
+  top: 50%;
+  transform: translateY(-50%);
   @media (max-width: 760px) {
     opacity: 1;
+  }
+`;
+
+export const Group = styled.section`
+  margin-top: -150px;
+  @media (max-width: 760px) {
+    margin-top: -80px;
   }
 `;
 
 export const Left = styled.div`
   ${sharedStyle}
   left: 0;
+  ${({ X }) => !X && `display: none;`}
 `;
 
 export const Right = styled.div`
   ${sharedStyle}
   right: 0;
+  ${({ X, Y }) => X === Y && `display: none;`}
 `;
 
 export const Row = styled.div`
-  margin-bottom: 30px;
   h2 {
     color: #fff;
-    margin: 0px 0px 20px 30px;
-    font-size: 32px;
+    margin: 0px 0px 0px 30px;
+    @media (max-width: 760px) {
+      margin: 0px 0px 0px 30px;
+    }
   }
   &:hover ${Left}, &:hover ${Right} {
     opacity: 1;
@@ -42,26 +55,18 @@ export const Row = styled.div`
 `;
 
 export const ListArea = styled.div`
+  position: relative;
   overflow-x: hidden;
   padding-left: 30px;
 `;
 
 export const List = styled.div`
+  height: 280px;
+  display: flex;
+  align-items: center;
   transition: all ease 0.2s;
+  box-sizing: border-box;
+  padding-right: 16px;
   margin-left: ${({ X }) => `${X}px`};
   width: ${({ W }) => `${W * 150}px`};
-`;
-
-export const Item = styled.div`
-  display: inline-block;
-  width: 150px;
-  cursor: pointer;
-  img {
-    width: 100%;
-    transform: scale(0.9);
-    transition: all ease 0.2s;
-  }
-  img:hover {
-    transform: scale(1);
-  }
 `;
