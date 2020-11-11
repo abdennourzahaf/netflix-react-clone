@@ -12,7 +12,7 @@ const obj = {
         slug: 'originals',
         title: 'Netflix Originals',
         items: await basicFecth(
-          `/discover/tv/?with_network=213&language=en&api_key=${API_KEY}`
+          `/discover/tv?with_network=213&language=en&api_key=${API_KEY}`
         ),
       },
       {
