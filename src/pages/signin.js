@@ -15,13 +15,13 @@ export default function SignIn() {
     mode: 'onTouched',
     defaultValues: {
       firstName: '',
-      email: location.state.currentEmail || '',
+      email: location.state?.currentEmail || '',
       password: '',
     },
   });
   const isValid =
     Object.keys(formState.dirtyFields).length ===
-      (location.state.currentEmail ? 1 : 2) &&
+      (location.state?.currentEmail ? 1 : 2) &&
     Object.keys(errors).length === 0 &&
     errors.constructor === Object;
 
