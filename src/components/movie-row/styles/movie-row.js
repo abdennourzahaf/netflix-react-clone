@@ -66,7 +66,6 @@ export const List = styled.div`
   align-items: center;
   transition: all ease 0.2s;
   box-sizing: border-box;
-  padding-right: 16px;
   margin-left: ${({ X }) => `${X}px`};
   width: ${({ W }) => `${W * 150}px`};
 `;

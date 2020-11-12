@@ -21,10 +21,16 @@ export const Inner = styled.div`
 export const Title = styled.h1`
   width: 100%;
   color: #fff;
-  font-size: 48px;
+  font-size: 3.5vw;
   text-align: center;
   font-weight: 500;
   margin-top: 0;
+  @media screen and (min-width: 1600px) {
+    font-size: 30px;
+  }
+  @media screen and (max-width: 780px) {
+    font-size: 26px;
+  }
 `;
 
 export const List = styled.ul`
@@ -34,17 +40,23 @@ export const List = styled.ul`
   flex-direction: row;
 `;
 
-export const Name = styled.p`
+export const Name = styled.span`
   line-height: 1.2em;
   min-height: 1.8em;
   color: grey;
   display: block;
   text-align: center;
-  font-size: 1.3vw;
+  font-size: 1.6vw;
   font-weight: 600;
   margin: 0.6em 0;
   text-overflow: ellipsis;
   overflow: hidden;
+  @media screen and (min-width: 1600px) {
+    font-size: 26px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 export const Picture = styled.div`
