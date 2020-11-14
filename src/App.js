@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
 import { useAuthListener } from './hooks';
-import { ScrollToTop } from './components';
+import { Loading, ScrollToTop } from './components';
 
 const SignUp = lazy(() => import('./pages/signup'));
 const Home = lazy(() => import('./pages/home'));
@@ -17,7 +17,7 @@ export function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Switch>
           <IsUserRedirect
             user={user}
